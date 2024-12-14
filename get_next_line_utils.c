@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ancengiz <ancengiz@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/14 02:18:40 by ancengiz          #+#    #+#             */
+/*   Updated: 2024/12/14 03:26:18 by ancengiz         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <string.h>
+
 size_t	ft_strlen(const char *str)
 {
 	int	i;
@@ -10,36 +22,31 @@ size_t	ft_strlen(const char *str)
 		i++;
 	return (i);
 }
+
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int		i;
-	int		j;
 	char	*str;
+	char	*temp;
+	char	*original_s1;
 
-	if (!s1 && !s2)
-		return (NULL);
 	if (!s1)
-		return (ft_strdup(s2)); // s1 NULL ise s2'yi döndür
+		return (ft_strdup(s2));
 	if (!s2)
-		return (ft_strdup(s1)); // s2 NULL ise s1'i döndür
+		return (ft_strdup(s1));
+	original_s1 = (char *)s1;
 	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!str)
+	{
+		free((void *)original_s1);
 		return (NULL);
-	i = 0;
-	while (s1[i] != '\0')
-	{
-		str[i] = s1[i]; // s1'i kopyala
-		i++;
 	}
-	j = 0;
-	while (s2[j] != '\0')
-	{
-		str[i + j] = s2[j]; // s2'yi ekle
-		j++;
-	}
-	str[i + j] = '\0'; // Sonlandırma karakteri
-	// Eski s1'i serbest bırak
-	free((void *)s1); // s1 malloc ile oluşturulmuşsa serbest bırakılır
+	temp = str;
+	while (*s1 != '\0')
+		*temp++ = *s1++;
+	while (*s2 != '\0')
+		*temp++ = *s2++;
+	*temp = '\0';
+	free((void *)original_s1);
 	return (str);
 }
 
