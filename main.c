@@ -6,11 +6,14 @@
 /*   By: ancengiz <ancengiz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 03:08:27 by ancengiz          #+#    #+#             */
-/*   Updated: 2024/12/14 03:09:25 by ancengiz         ###   ########.fr       */
+/*   Updated: 2024/12/15 21:28:19 by ancengiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 int	main(void)
 {
@@ -18,7 +21,7 @@ int	main(void)
 	char	*next_line;
 	int		i;
 
-	fd = open("example.txt", O_RDONLY);
+	fd = open("texts/example.txt", O_RDONLY);
 	if (fd == -1)
 	{
 		perror("Error opening file");

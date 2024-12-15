@@ -10,12 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
 #include "get_next_line.h"
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 32
-#endif
+#include <unistd.h>
 
 static char	*ft_get_line(char *buffer)
 {
@@ -31,24 +27,30 @@ static char	*ft_get_line(char *buffer)
 
 static char	*ft_trim_buffer(char *buffer)
 {
-	char	*end_of_line;
-	char	*trimmed;
+	int		i;
+	int		j;
+	char	*result;
 
-	end_of_line = ft_strchr(buffer, '\n');
-	if (!end_of_line)
+	i = 0;
+	if (!buffer)
+		return (NULL);
+	while (buffer[i] && buffer[i] != '\n')
+		i++;
+	if (!buffer[i] || !buffer[i + 1])
 	{
 		free(buffer);
 		return (NULL);
 	}
-	trimmed = ft_substr(buffer, (end_of_line - buffer) + 1,
-			ft_strlen(buffer) - (end_of_line - buffer));
-	if (!trimmed)
-	{
-		free(buffer);
+	result = (char *)malloc(sizeof(char) * (ft_strlen(buffer) - i));
+	if (!result)
 		return (NULL);
-	}
+	i++;
+	j = 0;
+	while (buffer[i])
+		result[j++] = buffer[i++];
+	result[j] = '\0';
 	free(buffer);
-	return (trimmed);
+	return (result);
 }
 
 static char	*read_from_file(int fd, char *buffer)
